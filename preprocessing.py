@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 spacy.cli.download("en_core_web_md")
 
 def preprocessing(df):
+    df=df.drop(columns='location')
     #1. Feature Engineering
     ponctuation = [".", "!", "?"]
 
