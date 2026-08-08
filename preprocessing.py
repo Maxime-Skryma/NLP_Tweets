@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import spacy
 from collections import Counter
 import sys
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 spacy.cli.download("en_core_web_md")
 
 def preprocessing(df):
@@ -17,9 +19,15 @@ def preprocessing(df):
     df["url_is_https"] = df["text"].str.contains(r"https://", regex=True)
     df["has_CAP"] = df["text"].str.isupper()
     
+    #2. Specific to NLP : Lemmatization, Vectorization, TF-IDF
     #Lemmatization and 'normalisation of words'
     nlp = spacy.load("en_core_web_md")
 
     df["tokens"] = [
     [token.lemma_.lower() for token in doc if token.is_alpha and not token.is_stop]
-    for doc in nlp.pipe(df_train["text"], batch_size=50)]
+    for doc in nlp.pipe(df["text"], batch_size=50)]
+    tokens=df["tokens"].explode()
+    
+    # Comme les tokens sont déjà nettoyés, on les rejoint en texte
+    df["texte_clean"] = df["tokens"].apply(" ".join)
+    return df
