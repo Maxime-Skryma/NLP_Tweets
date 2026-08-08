@@ -6,7 +6,7 @@ from collections import Counter
 import sys
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
-spacy.cli.download("en_core_web_md")
+
 
 def preprocessing(df):
     df=df.drop(columns='location')
