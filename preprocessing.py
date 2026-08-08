@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def preprocessing(df):
-    df=df.drop(columns='location')
+    df=df.copy()
     #1. Feature Engineering
     ponctuation = [".", "!", "?"]
 
@@ -27,8 +27,5 @@ def preprocessing(df):
     df["tokens"] = [
     [token.lemma_.lower() for token in doc if token.is_alpha and not token.is_stop]
     for doc in nlp.pipe(df["text"], batch_size=50)]
-    tokens=df["tokens"].explode()
-    
-    # Comme les tokens sont déjà nettoyés, on les rejoint en texte
-    df["texte_clean"] = df["tokens"].apply(" ".join)
+    df["texte_clean"] = df["tokens"].apply(lambda toks: " ".join(toks))
     return df
