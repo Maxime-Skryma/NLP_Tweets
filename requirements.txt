@@ -2,3 +2,4 @@ spacy
 scikit-learn
 matplotlib
 click
+sentence-transformers
