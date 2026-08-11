@@ -11,7 +11,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 def preprocessing(df):
     df=df.copy()
     #1. Feature Engineering
-    ponctuation = [".", "!", "?", "accident", "Accident", "journal", "Journal", "PM", "AM"]
+    ponctuation = [".", "!", "?", "accident", "Accident", "PM"]
 
     for p in ponctuation:
         df[f"has_{p}"] = df["text"].str.contains(p, regex=False)
